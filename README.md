@@ -4,7 +4,7 @@ A Swift struct for working with HTTP status codes. Part of the [Fly](https://git
 
 HTTPStatus provides named constants for the status codes you are likely to need:
 
-`HTTPStatus.OK`, `HTTPStatus.NotFound`, `HTTPStatus.InternalServerError`, and [many more](https://github.com/zef/HTTPStatus/blob/master/Sources/HTTPStatus.swift#L126).
+`HTTPStatus.OK`, `HTTPStatus.NotFound`, `HTTPStatus.InternalServerError`, and [many more](https://github.com/zef/HTTPStatus/blob/master/Sources/HTTPStatus.swift#L128).
 
 
 To use the provided status codes:

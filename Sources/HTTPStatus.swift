@@ -20,7 +20,31 @@ public struct HTTPStatus {
     static func codeIsValid(code: Int) -> Bool {
         return 100...599 ~= code
     }
+}
 
+extension HTTPStatus: IntegerLiteralConvertible {
+    public init(integerLiteral: Int) {
+        self.init(safeCode: integerLiteral)
+    }
+}
+
+extension HTTPStatus: CustomStringConvertible {
+    public var description: String {
+        return "\(code) \(message)"
+    }
+}
+
+public func == (left: HTTPStatus, right: HTTPStatus) -> Bool {
+    return left.code == right.code
+}
+
+extension HTTPStatus: Hashable {
+    public var hashValue: Int {
+        return code.hashValue
+    }
+}
+
+extension HTTPStatus {
     static var messages = [
         100: "Continue",
         101: "Switching Protocols",
@@ -100,28 +124,6 @@ public struct HTTPStatus {
         511: "Network Authentication Required",
         599: "Network Timeout Error"
     ]
-}
-
-extension HTTPStatus: IntegerLiteralConvertible {
-    public init(integerLiteral: Int) {
-        self.init(safeCode: integerLiteral)
-    }
-}
-
-extension HTTPStatus: CustomStringConvertible {
-    public var description: String {
-        return "\(code) \(message)"
-    }
-}
-
-public func == (left: HTTPStatus, right: HTTPStatus) -> Bool {
-    return left.code == right.code
-}
-
-extension HTTPStatus: Hashable {
-    public var hashValue: Int {
-        return code.hashValue
-    }
 }
 
 extension HTTPStatus {
