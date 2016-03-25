@@ -118,6 +118,12 @@ public func == (left: HTTPStatus, right: HTTPStatus) -> Bool {
     return left.code == right.code
 }
 
+extension HTTPStatus: Hashable {
+    public var hashValue: Int {
+        return code.hashValue
+    }
+}
+
 extension HTTPStatus {
     static let Continue                      = HTTPStatus(safeCode: 100)
     static let SwitchingProtocols            = HTTPStatus(safeCode: 101)
