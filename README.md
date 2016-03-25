@@ -53,16 +53,17 @@ String(HTTPStatus.InternalServerError) // "500 Internal Server Error"
 ```
 
 
-HTTPStatus is `Hashable` so it can be used as a dictionary key.
+HTTPStatus is `Hashable` so it can be used as a dictionary key:
 
 ```Swift
 let statusDictionary: [HTTPStatus: String]
 ```
 
-Other minutiae
+Other minutiae:
 
 ```Swift
-// initializing a valid code that is not known to this library will work, but will result in an "Unknown" message:
+// initializing a valid code that is not known to this library will work
+// but will result in an "Unknown" message:
 let custom: HTTPStatus = 199
 String(custom) // "199 Unknown"
 
