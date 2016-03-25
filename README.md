@@ -1,10 +1,10 @@
 # HTTPStatus.swift
 
-A small Swift struct to work with HTTP Status codes.
+A Swift struct for working with HTTP status codes. Part of the [Fly](https://github.com/zef/Fly) framework.
 
 HTTPStatus provides named constants for the status codes you are likely to need:
 
-`HTTPStatus.OK`, `HTTPStatus.NotFound`, `HTTPStatus.InternalServerError`, and many more.
+`HTTPStatus.OK`, `HTTPStatus.NotFound`, `HTTPStatus.InternalServerError`, and [many more](https://github.com/zef/HTTPStatus/blob/master/Sources/HTTPStatus.swift#L126).
 
 
 To use the provided status codes:
@@ -20,7 +20,6 @@ internalError = 500
 
 // But be careful! The code use use as a literal must be valid or the app will crash!
 // A valid code is considered to be anything in the range of 100 through 599
-
 let crashy: HTTPStatus = 99
 // precondition failed: Status Code must be between 100 and 599
 ```
@@ -65,5 +64,4 @@ let statusDictionary: [HTTPStatus: String]
 - [ ] Add classification enum and logic to represent the different status type ranges
 
 
-Part of the [Fly](https://github.com/zef/Fly) framework.
 
