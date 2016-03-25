@@ -37,7 +37,7 @@ HTTPStatus(safeCode: 199, message: "Very Informational Thing")
 
 ## Additional features
 
-HTTPStatus is `Comparable`:
+HTTPStatus is `Equatable`:
 
 ```Swift
 print(HTTPStatus.OK == 200) // true

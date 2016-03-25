@@ -34,6 +34,7 @@ extension HTTPStatus: CustomStringConvertible {
     }
 }
 
+extension HTTPStatus: Equatable {}
 public func == (left: HTTPStatus, right: HTTPStatus) -> Bool {
     return left.code == right.code
 }
@@ -126,7 +127,7 @@ extension HTTPStatus {
     ]
 }
 
-extension HTTPStatus {
+public extension HTTPStatus {
     static let Continue                      = HTTPStatus(safeCode: 100)
     static let SwitchingProtocols            = HTTPStatus(safeCode: 101)
     static let Processing                    = HTTPStatus(safeCode: 102)
