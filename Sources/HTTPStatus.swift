@@ -5,10 +5,20 @@ public struct HTTPStatus {
         return HTTPStatus.messages[code] ?? customMessage ?? "Unknown"
     }
 
-    public init(code: Int, message: String? = nil) {
-        precondition(100...599 ~= code, "Status Code must be between 100 and 599")
+    public init(safeCode code: Int, message: String? = nil) {
+        precondition(HTTPStatus.codeIsValid(code), "Status Code must be between 100 and 599")
         self.code = code
         self.customMessage = message
+    }
+
+    public init?(code: Int, message: String? = nil) {
+        guard HTTPStatus.codeIsValid(code) else { return nil  }
+        self.code = code
+        self.customMessage = message
+    }
+
+    static func codeIsValid(code: Int) -> Bool {
+        return 100...599 ~= code
     }
 
     static var messages = [
@@ -94,7 +104,7 @@ public struct HTTPStatus {
 
 extension HTTPStatus: IntegerLiteralConvertible {
     public init(integerLiteral: Int) {
-        self.init(code: integerLiteral)
+        self.init(safeCode: integerLiteral)
     }
 }
 
@@ -109,82 +119,82 @@ public func == (left: HTTPStatus, right: HTTPStatus) -> Bool {
 }
 
 extension HTTPStatus {
-    static let Continue                      = HTTPStatus(code: 100)
-    static let SwitchingProtocols            = HTTPStatus(code: 101)
-    static let Processing                    = HTTPStatus(code: 102)
+    static let Continue                      = HTTPStatus(safeCode: 100)
+    static let SwitchingProtocols            = HTTPStatus(safeCode: 101)
+    static let Processing                    = HTTPStatus(safeCode: 102)
 
-    static let OK                            = HTTPStatus(code: 200)
-    static let Created                       = HTTPStatus(code: 201)
-    static let Accepted                      = HTTPStatus(code: 202)
-    static let NonAuthoritativeInformation   = HTTPStatus(code: 203)
-    static let NoContent                     = HTTPStatus(code: 204)
-    static let ResetContent                  = HTTPStatus(code: 205)
-    static let PartialContent                = HTTPStatus(code: 206)
-    static let MultiStatus                   = HTTPStatus(code: 207)
-    static let AlreadyReported               = HTTPStatus(code: 208)
-    static let IMUsed                        = HTTPStatus(code: 226)
+    static let OK                            = HTTPStatus(safeCode: 200)
+    static let Created                       = HTTPStatus(safeCode: 201)
+    static let Accepted                      = HTTPStatus(safeCode: 202)
+    static let NonAuthoritativeInformation   = HTTPStatus(safeCode: 203)
+    static let NoContent                     = HTTPStatus(safeCode: 204)
+    static let ResetContent                  = HTTPStatus(safeCode: 205)
+    static let PartialContent                = HTTPStatus(safeCode: 206)
+    static let MultiStatus                   = HTTPStatus(safeCode: 207)
+    static let AlreadyReported               = HTTPStatus(safeCode: 208)
+    static let IMUsed                        = HTTPStatus(safeCode: 226)
 
-    static let MultipleChoices               = HTTPStatus(code: 300)
-    static let MovedPermanently              = HTTPStatus(code: 301)
-    static let Found                         = HTTPStatus(code: 302)
-    static let SeeOther                      = HTTPStatus(code: 303)
-    static let NotModified                   = HTTPStatus(code: 304)
-    static let UseProxy                      = HTTPStatus(code: 305)
-    static let SwitchProxy                   = HTTPStatus(code: 306)
-    static let TemporaryRedirect             = HTTPStatus(code: 307)
-    static let PermanentRedirect             = HTTPStatus(code: 308)
+    static let MultipleChoices               = HTTPStatus(safeCode: 300)
+    static let MovedPermanently              = HTTPStatus(safeCode: 301)
+    static let Found                         = HTTPStatus(safeCode: 302)
+    static let SeeOther                      = HTTPStatus(safeCode: 303)
+    static let NotModified                   = HTTPStatus(safeCode: 304)
+    static let UseProxy                      = HTTPStatus(safeCode: 305)
+    static let SwitchProxy                   = HTTPStatus(safeCode: 306)
+    static let TemporaryRedirect             = HTTPStatus(safeCode: 307)
+    static let PermanentRedirect             = HTTPStatus(safeCode: 308)
 
-    static let BadRequest                    = HTTPStatus(code: 400)
-    static let Unauthorized                  = HTTPStatus(code: 401)
-    static let PaymentRequired               = HTTPStatus(code: 402)
-    static let Forbidden                     = HTTPStatus(code: 403)
-    static let NotFound                      = HTTPStatus(code: 404)
-    static let MethodNotAllowed              = HTTPStatus(code: 405)
-    static let NotAcceptable                 = HTTPStatus(code: 406)
-    static let ProxyAuthenticationRequired   = HTTPStatus(code: 407)
-    static let RequestTimeout                = HTTPStatus(code: 408)
-    static let Conflict                      = HTTPStatus(code: 409)
-    static let Gone                          = HTTPStatus(code: 410)
-    static let LengthRequired                = HTTPStatus(code: 411)
-    static let PreconditionFailed            = HTTPStatus(code: 412)
-    static let PayloadTooLarge               = HTTPStatus(code: 413)
-    static let URITooLong                    = HTTPStatus(code: 414)
-    static let UnsupportedMediaType          = HTTPStatus(code: 415)
-    static let RangeNotSatisfiable           = HTTPStatus(code: 416)
-    static let ExpectationFailed             = HTTPStatus(code: 417)
-    static let ImATeapot                     = HTTPStatus(code: 418)
-    static let AuthenticationTimeout         = HTTPStatus(code: 419)
-    static let MisdirectedRequest            = HTTPStatus(code: 421)
-    static let UnprocessableEntity           = HTTPStatus(code: 422)
-    static let Locked                        = HTTPStatus(code: 423)
-    static let FailedDependency              = HTTPStatus(code: 424)
-    static let UpgradeRequired               = HTTPStatus(code: 426)
-    static let PreconditionRequired          = HTTPStatus(code: 428)
-    static let TooManyRequests               = HTTPStatus(code: 429)
-    static let RequestHeaderFieldsTooLarge   = HTTPStatus(code: 431)
-    static let LoginTimeout                  = HTTPStatus(code: 440)
-    static let NoResponse                    = HTTPStatus(code: 444)
-    static let RetryWith                     = HTTPStatus(code: 449)
-    static let UnavailableForLegalReasons    = HTTPStatus(code: 451)
-    static let RequestHeaderTooLarge         = HTTPStatus(code: 494)
-    static let CertError                     = HTTPStatus(code: 495)
-    static let NoCert                        = HTTPStatus(code: 496)
-    static let HTTPToHTTPS                   = HTTPStatus(code: 497)
-    static let TokenExpired                  = HTTPStatus(code: 498)
-    static let ClientClosedRequest           = HTTPStatus(code: 499)
+    static let BadRequest                    = HTTPStatus(safeCode: 400)
+    static let Unauthorized                  = HTTPStatus(safeCode: 401)
+    static let PaymentRequired               = HTTPStatus(safeCode: 402)
+    static let Forbidden                     = HTTPStatus(safeCode: 403)
+    static let NotFound                      = HTTPStatus(safeCode: 404)
+    static let MethodNotAllowed              = HTTPStatus(safeCode: 405)
+    static let NotAcceptable                 = HTTPStatus(safeCode: 406)
+    static let ProxyAuthenticationRequired   = HTTPStatus(safeCode: 407)
+    static let RequestTimeout                = HTTPStatus(safeCode: 408)
+    static let Conflict                      = HTTPStatus(safeCode: 409)
+    static let Gone                          = HTTPStatus(safeCode: 410)
+    static let LengthRequired                = HTTPStatus(safeCode: 411)
+    static let PreconditionFailed            = HTTPStatus(safeCode: 412)
+    static let PayloadTooLarge               = HTTPStatus(safeCode: 413)
+    static let URITooLong                    = HTTPStatus(safeCode: 414)
+    static let UnsupportedMediaType          = HTTPStatus(safeCode: 415)
+    static let RangeNotSatisfiable           = HTTPStatus(safeCode: 416)
+    static let ExpectationFailed             = HTTPStatus(safeCode: 417)
+    static let ImATeapot                     = HTTPStatus(safeCode: 418)
+    static let AuthenticationTimeout         = HTTPStatus(safeCode: 419)
+    static let MisdirectedRequest            = HTTPStatus(safeCode: 421)
+    static let UnprocessableEntity           = HTTPStatus(safeCode: 422)
+    static let Locked                        = HTTPStatus(safeCode: 423)
+    static let FailedDependency              = HTTPStatus(safeCode: 424)
+    static let UpgradeRequired               = HTTPStatus(safeCode: 426)
+    static let PreconditionRequired          = HTTPStatus(safeCode: 428)
+    static let TooManyRequests               = HTTPStatus(safeCode: 429)
+    static let RequestHeaderFieldsTooLarge   = HTTPStatus(safeCode: 431)
+    static let LoginTimeout                  = HTTPStatus(safeCode: 440)
+    static let NoResponse                    = HTTPStatus(safeCode: 444)
+    static let RetryWith                     = HTTPStatus(safeCode: 449)
+    static let UnavailableForLegalReasons    = HTTPStatus(safeCode: 451)
+    static let RequestHeaderTooLarge         = HTTPStatus(safeCode: 494)
+    static let CertError                     = HTTPStatus(safeCode: 495)
+    static let NoCert                        = HTTPStatus(safeCode: 496)
+    static let HTTPToHTTPS                   = HTTPStatus(safeCode: 497)
+    static let TokenExpired                  = HTTPStatus(safeCode: 498)
+    static let ClientClosedRequest           = HTTPStatus(safeCode: 499)
 
-    static let InternalServerError           = HTTPStatus(code: 500)
-    static let NotImplemented                = HTTPStatus(code: 501)
-    static let BadGateway                    = HTTPStatus(code: 502)
-    static let ServiceUnavailable            = HTTPStatus(code: 503)
-    static let GatewayTimeout                = HTTPStatus(code: 504)
-    static let HTTPVersionNotSupported       = HTTPStatus(code: 505)
-    static let VariantAlsoNegotiates         = HTTPStatus(code: 506)
-    static let InsufficientStorage           = HTTPStatus(code: 507)
-    static let LoopDetected                  = HTTPStatus(code: 508)
-    static let BandwidthLimitExceeded        = HTTPStatus(code: 509)
-    static let NotExtended                   = HTTPStatus(code: 510)
-    static let NetworkAuthenticationRequired = HTTPStatus(code: 511)
-    static let NetworkTimeoutError           = HTTPStatus(code: 599)
+    static let InternalServerError           = HTTPStatus(safeCode: 500)
+    static let NotImplemented                = HTTPStatus(safeCode: 501)
+    static let BadGateway                    = HTTPStatus(safeCode: 502)
+    static let ServiceUnavailable            = HTTPStatus(safeCode: 503)
+    static let GatewayTimeout                = HTTPStatus(safeCode: 504)
+    static let HTTPVersionNotSupported       = HTTPStatus(safeCode: 505)
+    static let VariantAlsoNegotiates         = HTTPStatus(safeCode: 506)
+    static let InsufficientStorage           = HTTPStatus(safeCode: 507)
+    static let LoopDetected                  = HTTPStatus(safeCode: 508)
+    static let BandwidthLimitExceeded        = HTTPStatus(safeCode: 509)
+    static let NotExtended                   = HTTPStatus(safeCode: 510)
+    static let NetworkAuthenticationRequired = HTTPStatus(safeCode: 511)
+    static let NetworkTimeoutError           = HTTPStatus(safeCode: 599)
 }
 
