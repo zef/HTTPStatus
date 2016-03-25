@@ -59,6 +59,18 @@ HTTPStatus is `Hashable` so it can be used as a dictionary key.
 let statusDictionary: [HTTPStatus: String]
 ```
 
+Other minutiae
+
+```Swift
+// initializing a valid code that is not known to this library will work, but will result in an "Unknown" message:
+let custom: HTTPStatus = 199
+String(custom) // "199 Unknown"
+
+// You cannot override a built-in status message
+let good = HTTPStatus(code: 200, message: "Very Good")
+String(good) // "200 OK"
+```
+
 ## TODO:
 
 - [ ] Add classification enum and logic to represent the different status type ranges
