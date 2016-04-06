@@ -22,6 +22,50 @@ public struct HTTPStatus {
     }
 }
 
+public extension HTTPStatus {
+    enum Family: String {
+        case Informational
+        case Successful
+        case Redirection
+        case ClientError
+        case ServerError
+
+        var range: Range<Int> {
+            switch self {
+            case Informational: return 100...199
+            case Successful:    return 200...299
+            case Redirection:   return 300...399
+            case ClientError:   return 400...499
+            case ServerError:   return 500...599
+            }
+        }
+
+    }
+
+    var family: Family {
+        switch code {
+        case Family.Informational.range:
+            return .Informational
+        case Family.Successful.range:
+            return .Successful
+        case Family.Redirection.range:
+            return .Redirection
+        case Family.ClientError.range:
+            return .ClientError
+        case Family.ServerError.range:
+            return .ServerError
+        default:
+            return .ServerError
+        }
+    }
+
+    var isInformational: Bool { return family == .Informational }
+    var isSuccessful:    Bool { return family == .Successful }
+    var isRedirection:   Bool { return family == .Redirection }
+    var isClientError:   Bool { return family == .ClientError }
+    var isServerError:   Bool { return family == .ServerError }
+}
+
 extension HTTPStatus: IntegerLiteralConvertible {
     public init(integerLiteral: Int) {
         self.init(safeCode: integerLiteral)
