@@ -18,7 +18,7 @@ internalError = .InternalServerError
 // You can also assign a value with a status code number diretly due to `IntegerLiteralConvertible`:
 internalError = 500
 
-// But be careful! The code use use as a literal must be valid or the app will crash!
+// But be careful! The code you use as a literal must be valid or the app will crash!
 // A valid code is considered to be anything in the range of 100 through 599
 let crashy: HTTPStatus = 99
 // precondition failed: Status Code must be between 100 and 599
